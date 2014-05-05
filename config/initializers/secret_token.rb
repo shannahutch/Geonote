@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Geonote::Application.config.secret_key_base = '671f1912fa26f4cee3d443bc4a0a4ecac5124299d252bec3ea11cc17d73f4e4f01d409787493644759720366afcafaac1ed0ad17ce15c058e8f4959222c431c4'
+Geonote::Application.config.secret_token = ENV['SECRET_KEY_BASE']
