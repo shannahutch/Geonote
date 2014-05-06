@@ -1,7 +1,27 @@
 <h1>Notes#index</h1>
 <p>Find me in app/views/notes/index.html.erb</p>
 
+<%= button_to "My Notes", {controller: :notess, action: :recent}, :method => :get, :class => "btn btn-success" %><br>
+<%= button_to "A New Note", {controller: :notes, action: :new}, :method => :get, :class => "btn btn-success" %>
+<br>
+
 <% @notes.each do |note| %>
-<li><%=note.text%></li>
+<li><%= note.text%></li>
+
+<!-- 
+link to show method controller -->
+<%= link_to note["text"], note_path(todo[:id]) %>
+
+<!-- link to edit in controller -->
+<%= link_to "edit", edit_note_path(note[:id]) , :class => "btn btn-primary btn-xs" %>
+
+<!-- link to detroy method controller -->
+<%= link_to "delete", note, method: :delete, data: { confirm: "Definitely Delete?" } , :class => "btn btn-danger btn-xs" %>
+  <br>
+
 
 <% end %>
+
+
+
+

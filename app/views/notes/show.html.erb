@@ -1,0 +1,13 @@
+<h1> Here's Your Note</h1>
+
+<!-- using the show method from controller -->
+<p>Text: <%= @note['text']%></p>
+<!-- a href=""></a> -->
+
+<% if @note['done'] %>
+  <p>Complete!</p>
+<%else%>
+  <p>Note finished!</p>
+<%end%>
+
+<%= link_to "My Notes", notes_path%>

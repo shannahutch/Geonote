@@ -14,9 +14,9 @@ class NotesController < ApplicationController
   end
 
   def create
-    note = Note.new note_params
-    if note.save
-      redirect_to note(@note)
+    @note = Note.new note_params
+    if @note.save
+      redirect_to note_path(@note)
     else
       flash[:error] = "Your note was not saved. Try again"
       redirect_to root_path
@@ -30,12 +30,12 @@ class NotesController < ApplicationController
   def update
     @note = Note.find(params[:id])
     @note.update note_params
-    redirect_to note(@note)
+    redirect_to note_path(@note)
   end
 
   def destroy
     Note.find(params[:id]).destroy
-    redirect_to root
+    redirect_to root_path
   end
 
   private
