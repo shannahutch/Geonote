@@ -15,8 +15,8 @@
 <!-- 
 sign up sign out form -->
 
-
-<%= current_user %> 
+<!-- displays user email as user name -->
+<%= current_user.email %> 
 
 <% if current_user != nil %>
   <%= button_to "Log out", destroy_user_session_path, method: :delete %>
