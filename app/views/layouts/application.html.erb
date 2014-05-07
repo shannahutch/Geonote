@@ -5,8 +5,15 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 
+    <!--
+  Include the maps javascript with sensor=true because this code is using a
+  sensor (a GPS locator) to determine the user's location.
+  See: https://developers.google.com/maps/documentation/javascript/tutorial#Loading_the_Maps_API
+  -->
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+
   <%= csrf_meta_tags %>
-   <%= include_gon %>
+   <%= include_gon %> 
 </head>
 <body>
 

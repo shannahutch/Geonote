@@ -1,7 +1,8 @@
 class NotesController < ApplicationController
   def index
+    # this is using the gone gem to make a variable accessable by JS
     @notes = Note.all
-    gon.pin = Note.last11
+    gon.pin = Note.last
   end
 
   def show  
