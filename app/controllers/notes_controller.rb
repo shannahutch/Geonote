@@ -1,6 +1,7 @@
 class NotesController < ApplicationController
   def index
     @notes = Note.all
+    gon.pin = Note.last11
   end
 
   def show  
@@ -15,7 +16,7 @@ class NotesController < ApplicationController
 
   def create
     # binding.pry
-    
+
     @note = Note.new note_params
     if @note.save
       redirect_to note_path(@note)

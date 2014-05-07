@@ -10,6 +10,7 @@
 
   <% end %>
 
+<%= button_to "My Notes", {controller: :notes}, :method => :get, :class => "btn btn-success" %><br>
 
 
 <!-- 
@@ -23,4 +24,5 @@ sign up sign out form -->
   <% else %> 
     <%= link_to "Sign up", new_user_registration_path %>
     <%= link_to "Log in", new_user_session_path %>
+    
 <% end %>

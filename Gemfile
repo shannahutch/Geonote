@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.4'
+gem 'gon'
 
 gem 'pg'
 # use postgress for db
@@ -29,7 +30,11 @@ gem 'jbuilder', '~> 1.2'
 
 #authentication 
 gem 'devise'
+ #
+ #map gem
+ gem 'gmaps4rails'
 
+ 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
