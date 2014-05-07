@@ -3,11 +3,13 @@ class NotesController < ApplicationController
     # this is using the gone gem to make a variable accessable by JS
     @notes = Note.all
     gon.pin = Note.last
+
+    # @note = Note.new(text: "my note", latitude: )
   end
 
   def show  
     @note = Note.find(params[:id])
-
+    #gon.notes = Note.all
   end
 
   def new
@@ -16,7 +18,7 @@ class NotesController < ApplicationController
   end
 
   def create
-    # binding.pry
+    binding.pry
 
     @note = Note.new note_params
     if @note.save
@@ -44,6 +46,6 @@ class NotesController < ApplicationController
 
   private
     def note_params
-      params.require(:note).permit(:text)
+      params.require(:note).permit(:text, :latitude, :longitude)
     end
 end

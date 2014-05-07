@@ -34,6 +34,19 @@
 
 <div id="map-canvas"></div>
 
+
+
+<% if current_user != nil %>
+
+  <%= current_user.email %> 
+  <%= button_to "Log out", destroy_user_session_path, method: :delete %>
+  <% else %> 
+    <%= link_to "Sign up", new_user_registration_path %>
+    <%= link_to "Log in", new_user_session_path %>
+
+<% end %>
+
+
 <script>
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see a blank space instead of the map, this
@@ -70,6 +83,7 @@ function initialize() {
 
   var marker = new google.maps.Marker({
       position: myLatlng,
+      draggable: true,
       map: map,
       title: 'Uluru (Ayers Rock)'
   });
@@ -89,7 +103,6 @@ function initialize() {
       // alert(latitude);
 
       longitude = position.coords.longitude;
-
 
 
       var infowindow = new google.maps.InfoWindow({
@@ -133,6 +146,14 @@ function alertNoteInformation() {
   var text = $('#mytextbox').val();
   var info = text + latitude + longitude;
   alert(info);
+  //<button id= >
+  $.ajax ({
+    type:"POST",
+    url:"/notes",
+    data: {note: {text: text, latitude: latitude, longitude: longitude}}
+  });
+    alert(info);
+//</button>
 
 
 }
