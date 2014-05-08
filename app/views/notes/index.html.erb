@@ -27,13 +27,24 @@
   <% end %>
 </ul>
 
-<!-- create input text box -->
-<input type="text" id="mytextbox" value= "My first note" />
 
-<button id="newnote" onclick="alertNoteInformation()">New Note</button>
+<%= form_for @note do |f| %>
+  <!-- create input text box -->
+  <div>
+    <textarea  id="mytextbox" cols="50" rows="20" placeholder="My first note"></textarea> 
+  </div>
 
+  <div>
+    <label for="latitude">Latitude:</label>
+    <%= f.text_field :latitude  %>
+    
+    <label for="longitude">Longitude:</label>
+    <%= f.text_field :longitude  %>
+  </div>
+
+  <%= f.submit %>
+<% end %>
 <div id="map-canvas"></div>
-
 
 
 <% if current_user != nil %>
@@ -52,111 +63,139 @@
 // prompted by your browser. If you see a blank space instead of the map, this
 // is probably because you have denied permission for location sharing.
 
-var map;
-var myLatlng = new google.maps.LatLng(gon.pin.latitude,gon.pin.longitude);
-
-//creating lat long as usable variables available outside function
-var latitude;
-var longitude;
 
 
-function initialize() {
-  var mapOptions = {
-    zoom: 13
-  };
+
+function initialize(map, geoData) {
+
+
+  if(geoData === undefined){
+    var lat = Math.pow(-1,Math.floor(Math.random()*2))*Math.random()*90;
+    var long = Math.pow(-1,Math.floor(Math.random()*2))*Math.random()*180;
+    var myLatlng = new google.maps.LatLng(lat,long);
+  } else {
+    var myLatlng = new google.maps.LatLng(geoData.coords.latitude, geoData.coords.longitude);
+  }
+
+
+
   
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
 
-  var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      title: 'Hello World!'
-  });
 
-  var contentString = '<p>'+ gon.pin.text + '</p>';
-    ;
 
+
+  //info put in here
+  var contentString = '<div class="content"><p> CREATE YOUR NOTE!! </p></div>';
+    
   var infowindow = new google.maps.InfoWindow({
       content: contentString
   });
 
+
+
+//goes into here
   var marker = new google.maps.Marker({
       position: myLatlng,
       draggable: true,
       map: map,
-      title: 'Uluru (Ayers Rock)'
-  });
-  
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.open(map,marker);
+      title: 'NOTE'
   });
 
-  // Try HTML5 geolocation
-  //centers map on your position 
-  if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = new google.maps.LatLng(position.coords.latitude,
-                                       position.coords.longitude);
-      //taking lat long from map
-      latitude = position.coords.latitude;
-      // alert(latitude);
+  // function addLocation(loc){
+  //    var new_marker = new google.maps.Marker({
+  //     position: loc,
+  //     map: map,
+  //     title: "old note"
+  //   });
+  // };
 
-      longitude = position.coords.longitude;
-
-
-      var infowindow = new google.maps.InfoWindow({
-        map: map,
-        position: pos,
-        content: 'Location found using HTML5.'
-      });
-
-      map.setCenter(pos);
-    }, function() {
-      handleNoGeolocation(true);
+  for (var i = 0; i < gon.notes.length; i++) {
+    var note = gon.notes[i];
+    var loc = new google.maps.LatLng(note.latitude, note.longitude )
+    var new_marker = new google.maps.Marker({
+      position: loc,
+      map: map,
+      title: "old note"
     });
-  } else {
-    // Browser doesn't support Geolocation
-    handleNoGeolocation(false);
-  }
-}
-
-function handleNoGeolocation(errorFlag) {
-  if (errorFlag) {
-    var content = 'Error: The Geolocation service failed.';
-  } else {
-    var content = 'Error: Your browser doesn\'t support geolocation.';
-  }
-
-  var options = {
-    map: map,
-    position: new google.maps.LatLng(60, 105),
-    content: content
+   // addNote(new_marker)
   };
 
-  var infowindow = new google.maps.InfoWindow(options);
-  map.setCenter(options.position);
+
+
+  $("#note_latitude").val(myLatlng.k);
+  $("#note_longitude").val(myLatlng.A);
+
+  map.setCenter(marker.position);
+  marker.setMap(map);
+    infowindow.open(map,marker);
+    // 
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map,marker);
+    //placeMarker(event.latLng);
+  });
+//accessed here
+  google.maps.event.addListener(marker, "dragend", function(event) { 
+    console.log(event.latLng);
+    // Lat and Long data for a dragged item
+    var latLng = event.latLng;
+    var lat = latLng.k;
+    var lng = latLng.A;
+
+    $("#note_latitude").val(lat);
+    $("#note_longitude").val(lng);
+    map.setCenter(latLng);
+  }); 
+
+
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+// function handleNoGeolocation(errorFlag) {
+//   if (errorFlag) {
+//     var content = 'Error: The Geolocation service failed.';
+//   } else {
+//     var content = 'Error: Your browser doesn\'t support geolocation.';
+//   }
+
+//   var options = {
+//     map: map,
+//     position: new google.maps.LatLng(60, 105),
+//     content: content
+//   };
+
+//   // for(var i =0; i < gon.notes.length, i++){
+//   //     var loc = google.maps.LatLng(gon.notes[i].latitude, gon.notes[i] .longitude );
+//   // }
+
+
+//   var infowindow = new google.maps.InfoWindow(options);
+//   map.setCenter(options.position);
+// }
+
+$(document).on("page:load ready", function(){
+  try{
+    console.log(gon)
+  } catch (e) {
+    window.location = window.location.reload(true);
+  }
+  console.log("LOADING");
+  var mapOptions = {
+    zoom: 13,
+  };
+  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  navigator.geolocation.getCurrentPosition(function(geoData){
+    initialize(map,geoData);
+  }, function(){
+    initialize(map);
+  })
+
+});
+
 
 
 //taking note and lat long and saving into variable that can be displayed
-function alertNoteInformation() {
-  var text = $('#mytextbox').val();
-  var info = text + latitude + longitude;
-  alert(info);
-  //<button id= >
-  $.ajax ({
-    type:"POST",
-    url:"/notes",
-    data: {note: {text: text, latitude: latitude, longitude: longitude}}
-  });
-    alert(info);
-//</button>
 
 
-}
+
 
 </script>
 

@@ -2,8 +2,9 @@ class NotesController < ApplicationController
   def index
     # this is using the gone gem to make a variable accessable by JS
     @notes = Note.all
-    gon.pin = Note.last
-
+    # gon.notes = @notes
+    gon.notes = Note.all
+    @note = Note.new
     # @note = Note.new(text: "my note", latitude: )
   end
 
@@ -18,7 +19,7 @@ class NotesController < ApplicationController
   end
 
   def create
-    binding.pry
+    #binding.pry
 
     @note = Note.new note_params
     if @note.save

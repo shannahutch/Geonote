@@ -2,14 +2,11 @@
 
 <!-- Uses the  @note instance method from edit  -->
 
-<%= form for @note do |if| %>
+<%= form_for @note do |f| %>
 
-  <%= label_tag(:text, "Your Note") %>
-  <%= f.text_field :text, :class => "form-control" %></br>
-
-  <%= label_tag(:done, "Finished?") %>
-  <%f.check_box :done, {}, true, false,  %><br />
+  <%= label_tag(:text, "Your Note") %> </br>
+  <%= f.text_area :text, :class => "form-control", cols: "30", rows: "15" %></br>
 
   <%= f.submit "Update", :class => "btn btn-warning" %>
 
-  <% end %>
+<% end %>
