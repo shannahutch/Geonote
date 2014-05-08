@@ -51,16 +51,8 @@
 <!-- map area created -->
 <div id="map-canvas"></div>
 
-<!-- athentication and authorize by devise -->
-<% if current_user != nil %>
 
-  <%= current_user.email %> 
-  <%= button_to "Log out", destroy_user_session_path, method: :delete %>
-  <% else %> 
-    <%= link_to "Sign up", new_user_registration_path %>
-    <%= link_to "Log in", new_user_session_path %>
 
-<% end %>
 
 
 <script>
@@ -81,13 +73,6 @@ function initialize(map, geoData) {
   } else {
     var myLatlng = new google.maps.LatLng(geoData.coords.latitude, geoData.coords.longitude);
   }
-
-
-
-  
-
-
-
 
   //info put in here
   var contentString = '<div class="content"><p> CREATE YOUR NOTE!! </p></div>';
@@ -114,20 +99,6 @@ function initialize(map, geoData) {
   //   });
   // };
 
-
-// iterates thorugh your notes to display everything on the map
-  for (var i = 0; i < gon.notes.length; i++) {
-    var note = gon.notes[i];
-    var loc = new google.maps.LatLng(note.latitude, note.longitude )
-    var new_marker = new google.maps.Marker({
-      position: loc,
-      map: map,
-      title: "infoWindow"
-    });
-   // addNote(new_marker)
-  };
-
-
 // creates universal variable for the lat long that is taken in my Gmaps
   $("#note_latitude").val(myLatlng.k);
   $("#note_longitude").val(myLatlng.A);
@@ -135,7 +106,7 @@ function initialize(map, geoData) {
 // centers map on our marker
   map.setCenter(marker.position);
   marker.setMap(map);
-    infowindow.open(map,marker);
+  infowindow.open(map,marker);
     // listens for click to set marker location
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map,marker);
@@ -144,6 +115,7 @@ function initialize(map, geoData) {
 //accessed here
   google.maps.event.addListener(marker, "dragend", function(event) { 
     console.log(event.latLng);
+    // infowindow.open(map,marker);
     // Lat and Long data for a dragged item
     var latLng = event.latLng;
     var lat = latLng.k;
@@ -154,30 +126,23 @@ function initialize(map, geoData) {
     map.setCenter(latLng);
   }); 
 
+// iterates thorugh your notes to display everything on the map
+  for (var i = 0; i < gon.notes.length; i++) {
+    var note = gon.notes[i];
+    var loc = new google.maps.LatLng(note.latitude, note.longitude)
+    var new_marker = new google.maps.Marker({
+      position: loc,
+      map: map,
+      title: "infoWindow"
+    });
+   // addNote(new_marker)
+    var infowindow = new google.maps.InfoWindow({
+      content: note.text
+    })
+   console.log(note);
+  };
 
 }
-
-// function handleNoGeolocation(errorFlag) {
-//   if (errorFlag) {
-//     var content = 'Error: The Geolocation service failed.';
-//   } else {
-//     var content = 'Error: Your browser doesn\'t support geolocation.';
-//   }
-
-//   var options = {
-//     map: map,
-//     position: new google.maps.LatLng(60, 105),
-//     content: content
-//   };
-
-//   // for(var i =0; i < gon.notes.length, i++){
-//   //     var loc = google.maps.LatLng(gon.notes[i].latitude, gon.notes[i] .longitude );
-//   // }
-
-
-//   var infowindow = new google.maps.InfoWindow(options);
-//   map.setCenter(options.position);
-// }
 
 
 // loads the map

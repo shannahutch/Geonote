@@ -1,4 +1,7 @@
 class NotesController < ApplicationController
+#binding.pry
+   before_filter :authenticate_user!,  except: [:show]
+
   def index
     # this is using the gone gem to make a variable accessable by JS
     @notes = Note.all
@@ -43,11 +46,18 @@ class NotesController < ApplicationController
 
   def destroy
     Note.find(params[:id]).destroy
-    redirect_to notes_path
+    session[:current_user_id] = nil
+    flash[:notice] = "You have successfully logged out."
+    redirect_to root_path
   end
 
   private
     def note_params
       params.require(:note).permit(:text, :latitude, :longitude)
     end
+  #   def current_user
+  #   @_current_user ||= session[:current_user_id] &&
+  #     User.find_by(id: session[:current_user_id])
+  # end
+
 end

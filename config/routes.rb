@@ -4,6 +4,7 @@ Geonote::Application.routes.draw do
 
   root 'notes#new'
 
+
   resources :notes
 
   # get "/notes/index", to: 'notes#index', as: 'notes'
