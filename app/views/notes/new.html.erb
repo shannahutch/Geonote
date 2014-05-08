@@ -3,14 +3,7 @@
 <h2>New Note</h2>
 <!-- <p>Find me in app/views/notes/new.html.erb</p>
  -->
-<%= form_for @note do |f| %>
-  <%= f.label :text %>
-  <%= f.text_field :text %>
-  <%= f.submit %>
 
-  <% end %>
-
-<%= button_to "My Notes", {controller: :notes}, :method => :get, :class => "btn btn-success" %><br>
 
 
 <!-- 
@@ -29,3 +22,4 @@ sign up sign out form -->
     <%= link_to "Log in", new_user_session_path %>
 
 <% end %>
+

@@ -8,10 +8,11 @@
   }
 </style>
 
-<%= button_to "A New Note", {controller: :notes, action: :new}, :method => :get, :class => "btn btn-success" %>
-<br>
+<h1>GEONOTE!</h1> 
 
 <ul>
+<!-- 
+  list all the notes -->
   <% @notes.each do |note| %>
     <li><%= note.text%></li>
 
@@ -27,7 +28,7 @@
   <% end %>
 </ul>
 
-
+<!-- form to take in the note info and lat long -->
 <%= form_for @note do |f| %>
   <!-- create input text box -->
   <div>
@@ -44,9 +45,11 @@
 
   <%= f.submit %>
 <% end %>
+
+<!-- map area created -->
 <div id="map-canvas"></div>
 
-
+<!-- athentication and authorize by devise -->
 <% if current_user != nil %>
 
   <%= current_user.email %> 
@@ -68,7 +71,7 @@
 
 function initialize(map, geoData) {
 
-
+// if geodata is denied you will get a random place in the workd to start. 
   if(geoData === undefined){
     var lat = Math.pow(-1,Math.floor(Math.random()*2))*Math.random()*90;
     var long = Math.pow(-1,Math.floor(Math.random()*2))*Math.random()*180;
@@ -86,14 +89,14 @@ function initialize(map, geoData) {
 
   //info put in here
   var contentString = '<div class="content"><p> CREATE YOUR NOTE!! </p></div>';
-    
+    // info window that shows up on map with marker
   var infowindow = new google.maps.InfoWindow({
       content: contentString
   });
 
 
 
-//goes into here
+// creates draggable marker
   var marker = new google.maps.Marker({
       position: myLatlng,
       draggable: true,
@@ -109,26 +112,29 @@ function initialize(map, geoData) {
   //   });
   // };
 
+
+// iterates thorugh your notes to display everything on the map
   for (var i = 0; i < gon.notes.length; i++) {
     var note = gon.notes[i];
     var loc = new google.maps.LatLng(note.latitude, note.longitude )
     var new_marker = new google.maps.Marker({
       position: loc,
       map: map,
-      title: "old note"
+      title: "inforWindow"
     });
    // addNote(new_marker)
   };
 
 
-
+// creates universal variable for the lat long that is taken in my Gmaps
   $("#note_latitude").val(myLatlng.k);
   $("#note_longitude").val(myLatlng.A);
 
+// centers map on our marker
   map.setCenter(marker.position);
   marker.setMap(map);
     infowindow.open(map,marker);
-    // 
+    // listens for click to set marker location
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map,marker);
     //placeMarker(event.latLng);
@@ -171,6 +177,8 @@ function initialize(map, geoData) {
 //   map.setCenter(options.position);
 // }
 
+
+// loads the map
 $(document).on("page:load ready", function(){
   try{
     console.log(gon)
@@ -181,6 +189,8 @@ $(document).on("page:load ready", function(){
   var mapOptions = {
     zoom: 13,
   };
+
+  // the actual map created by google will use your positon if accepted otherwise it uses the randomized positon at the top
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   navigator.geolocation.getCurrentPosition(function(geoData){
     initialize(map,geoData);
@@ -189,11 +199,6 @@ $(document).on("page:load ready", function(){
   })
 
 });
-
-
-
-//taking note and lat long and saving into variable that can be displayed
-
 
 
 
