@@ -21,4 +21,30 @@ describe NotesController do
       expect(response).to render_template("index")  
     end
   end
+
+  describe 'Get new' do
+    it 'returns a 200 Ok status' do
+      ntoe = Note.create
+      get notes_path
+      expect(response.status).to eq(200)
+    end
+
+  describe 'Get edit' do
+    it 'returns a 200 Ok status' do
+      get notes_path
+      expect(response.status).to eq(200)
+    end
+  end  
+
+  describe 'Get show' do
+      it 'returns a 20 OK status' do
+        get notes_path
+        expect(response.status).to eq(200)
+      end   
+      # it 'renders the show template' do
+      #   get :show, id:@url.id
+      #   expect(response).to render_template("show")
+      # end   
+    end
+
 end
