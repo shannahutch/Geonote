@@ -53,15 +53,10 @@
 
 
 
-
-
 <script>
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see a blank space instead of the map, this
 // is probably because you have denied permission for location sharing.
-
-
-
 
 function initialize(map, geoData) {
 
@@ -83,7 +78,7 @@ function initialize(map, geoData) {
 
 
 
-// creates draggable marker
+// creates draggable marker and inital marker
   var marker = new google.maps.Marker({
       position: myLatlng,
       draggable: true,
@@ -91,13 +86,53 @@ function initialize(map, geoData) {
       title: 'NOTE'
   });
 
-  // function addLocation(loc){
-  //    var new_marker = new google.maps.Marker({
-  //     position: loc,
-  //     map: map,
-  //     title: "old note"
-  //   });
-  // };
+
+
+  var lastInfoWindow;
+  var addInfoWindowListener = function(marker, newInfoWindow){
+
+    google.maps.event.addListener(marker, 'click', function() {
+      if(!!lastInfoWindow){
+      lastInfoWindow.close();
+      }
+
+      if(lastInfoWindow === newInfoWindow){
+          lastInfoWindow = null;
+      } else {
+          newInfoWindow.open(map,this);
+          lastInfoWindow = newInfoWindow;
+      }
+
+    });
+
+  }
+
+
+// iterates thorugh your notes to display everything on the map
+  for (var i = 0; i < gon.notes.length; i++) {
+    var note = gon.notes[i];
+    var loc = new google.maps.LatLng(note.latitude, note.longitude)
+    var newMarker = new google.maps.Marker({
+      position: loc,
+      map: map,
+      title: "Your note"
+    });
+
+    var newInfoWindow = new google.maps.InfoWindow({
+      content: note.text
+    });
+
+    addInfoWindowListener(newMarker, newInfoWindow);
+   // addNote(new_marker)
+
+
+
+    // console.log(note);
+   
+    //placeMarker(event.latLng);
+  
+  }
+
 
 // creates universal variable for the lat long that is taken in my Gmaps
   $("#note_latitude").val(myLatlng.k);
@@ -106,7 +141,8 @@ function initialize(map, geoData) {
 // centers map on our marker
   map.setCenter(marker.position);
   marker.setMap(map);
-  infowindow.open(map,marker);
+    infowindow.open(map,marker);
+
     // listens for click to set marker location
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map,marker);
@@ -126,21 +162,6 @@ function initialize(map, geoData) {
     map.setCenter(latLng);
   }); 
 
-// iterates thorugh your notes to display everything on the map
-  for (var i = 0; i < gon.notes.length; i++) {
-    var note = gon.notes[i];
-    var loc = new google.maps.LatLng(note.latitude, note.longitude)
-    var new_marker = new google.maps.Marker({
-      position: loc,
-      map: map,
-      title: "infoWindow"
-    });
-   // addNote(new_marker)
-    var infowindow = new google.maps.InfoWindow({
-      content: note.text
-    })
-   console.log(note);
-  };
 
 }
 
