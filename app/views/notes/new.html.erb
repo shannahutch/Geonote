@@ -1,6 +1,6 @@
 
 <h1>GEONOTE!</h1> 
-<h2>New Note</h2>
+
 <!-- <p>Find me in app/views/notes/new.html.erb</p>
  -->
 
@@ -17,6 +17,7 @@ sign up sign out form -->
 
   <%= current_user.email %> 
   <%= button_to "Log out", destroy_user_session_path, method: :delete %>
+
   <% else %> 
     <%= link_to "Sign up", new_user_registration_path %>
     <%= link_to "Log in", new_user_session_path %>

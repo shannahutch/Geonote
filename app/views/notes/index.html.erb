@@ -9,16 +9,42 @@
 </style>
 
 <h1>GeoNote!</h1> 
-<h4>Write your note,<br> Drag the marker<br> Press create<br>Your GeoNote is created!</></h4>
+<div id="instructions">
+  <ul>
+    <li>Write your note,</li>
+    <li>Drag the marker</li> 
+    <li>Press create</li>
+    <li>Click your GeoNote!</></li>
+  </ul>
+</div>
 
+
+<!-- form to take in the note info and lat long -->
+<%= form_for @note do |f| %>
+  <!-- create input text box -->
+  <div class="info">
+   <!--  takes in note and adds it to lat long -->
+    <%= f.label :text %>
+    <%= f.text_area :text %>
+  
+    <label for="latitude">Latitude:</label>
+    <%= f.text_field :latitude  %>
+    
+    <label for="longitude">Longitude:</label>
+    <%= f.text_field :longitude  %>
+</div>
+<div id="create">
+  <%= f.submit %>
+<% end %>
+</div>  
+<!-- map area created -->
+<div id="map-canvas"></div>
 <ul>
 <!-- 
   list all the notes -->
   <% @notes.each do |note| %>
-    <li><%= note.text%></li>
 
-    <!-- link to show method controller -->
-    <%= link_to note["text"], note_path(note[:id]) %>
+    <%= note.text%>
 
     <!-- link to edit in controller -->
     <%= link_to "edit", edit_note_path(note[:id]) , :class => "btn btn-primary btn-xs" %>
@@ -29,28 +55,6 @@
   <% end %>
 
 </ul>
-
-<!-- form to take in the note info and lat long -->
-<%= form_for @note do |f| %>
-  <!-- create input text box -->
-  <div>
-   <!--  takes in note and adds it to lat long -->
-    <%= f.label :text %>
-    <%= f.text_area :text %>
-  
-    <label for="latitude">Latitude:</label>
-    <%= f.text_field :latitude  %>
-    
-    <label for="longitude">Longitude:</label>
-    <%= f.text_field :longitude  %>
-  </div>
-
-  <%= f.submit %>
-<% end %>
-
-<!-- map area created -->
-<div id="map-canvas"></div>
-
 
 
 <script>
@@ -119,7 +123,7 @@ function initialize(map, geoData) {
     });
 
     var newInfoWindow = new google.maps.InfoWindow({
-      content: note.text 
+      content: "<h3> "+ note.text +"</h3>"
 
       // "<h1> "+ note +"</h1>"
 

@@ -4,6 +4,85 @@
 
 
 body {
-    background-color: yellow;
+    background-color: #0F4E34;
+    margin-top: -18px;
 
       }
+#loginout {
+    text-align: right;
+}
+div {
+    padding-left: 30px;
+    padding-bottom: 18px;
+}
+
+.info {
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 15px;
+}
+#create {
+    padding-bottom: 0px;
+    padding-left: 54px;
+}
+
+h1 { 
+    text-align: center;
+    font-size: 45px;  
+    margin-top: -50px;
+    }
+
+h2 {
+  padding-left: 30px;
+}
+
+#instructions {
+  height: 40px;
+  width: 982px;
+  padding-right: 10px;
+  padding-left: 10px;
+  text-align: center;
+}
+#instructions ul {
+  list-style-type: none;
+  margin: 0px;
+  padding-left: 0px;
+  
+  
+}
+#instructions ul li {
+  display: inline;
+  margin-right: 5px;
+  margin-left: 5px;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 13px;
+  line-height: 40px;
+  border: 1px solid #333;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 1px #333;
+  background-color: #9F26F0;
+}
+#instructions ul li a {
+  color: #000;
+  text-decoration: none;
+}
+
+#instructions li:nth-of-type(odd)
+{
+  position: relative;
+  z-index: 1;
+  top: -25px;
+}
+#instructions li:nth-of-type(even)
+{
+  position: relative;
+  z-index: 1;
+  top: -15px;
+}
+#logout {
+  text-align:right;
+}
