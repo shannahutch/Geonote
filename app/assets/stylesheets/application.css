@@ -29,6 +29,16 @@ div {
     padding-bottom: 9px;  
 }
 
+#welcome {
+    margin: 0 auto;
+    padding-top: 25px;
+}
+
+#signin {
+  margin-top: 60px;
+    margin-left: 100px;
+}
+
 .info {
     text-align: left;
     padding-left: 20px;
