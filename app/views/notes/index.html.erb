@@ -24,8 +24,8 @@
   <!-- create input text box -->
   <div class="info">
    <!--  takes in note and adds it to lat long -->
-    <%= f.label :text %>
-    <%= f.text_area :text %>
+    <%= f.label :text   %>
+    <%= f.text_area :text%>
   
     <label for="latitude">Latitude:</label>
     <%= f.text_field :latitude  %>
@@ -39,22 +39,6 @@
 </div>  
 <!-- map area created -->
 <div id="map-canvas"></div>
-<ul>
-<!-- 
-  list all the notes -->
-  <% @notes.each do |note| %>
-
-    <%= note.text%>
-
-    <!-- link to edit in controller -->
-    <%= link_to "edit", edit_note_path(note[:id]) , :class => "btn btn-primary btn-xs" %>
-
-    <!-- link to detroy method controller -->
-    <%= link_to "delete", note, method: :delete, data: { confirm: "Definitely Delete?" } , :class => "btn btn-danger btn-xs" %>
-    <br>
-  <% end %>
-
-</ul>
 
 
 <script>
@@ -91,7 +75,7 @@ function initialize(map, geoData) {
   });
 
 
-
+//opens and clsoes info windows as you click on different ones
   var lastInfoWindow;
   var addInfoWindowListener = function(marker, newInfoWindow){
 
@@ -122,8 +106,13 @@ function initialize(map, geoData) {
       title: "Your note"
     });
 
+
+    //creates info windo with edit links
     var newInfoWindow = new google.maps.InfoWindow({
-      content: "<h3> "+ note.text +"</h3>"
+      content: "<h3> "+ note.text + "</h3> " + 
+      "<a href='/notes/"+ note.id +"/edit'> edit </a>" +
+      "<a data-confirm='Definitely Delete?' data-method='delete' href='/notes/" +
+      note.id + "rel='nofollow'>delete</a>"
 
       // "<h1> "+ note +"</h1>"
 

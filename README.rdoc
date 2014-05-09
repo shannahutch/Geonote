@@ -5,6 +5,38 @@ application up and running.
 
 Things you may want to cover:
 
+Gems needed
+  gon
+  devise
+  gmaps4rails
+  pg
+  dotenv-rails
+  pry
+  rspec-rails
+
+
+- create 2 models Users, Notes.  Users created by gem 'gon'
+
+Users model needs to take the note and lat long of note location.
+
+Create google map for main pag.  This will also incluse th eindex of notes, create, edit, delete, 
+
+create log out
+
+create secret
+
+After sugn in, guest will use index page to run most app functions.  Plan to drag note around map for information to be displayed.  
+
+Create text box to accept note information
+
+Run request specs
+
+use Javescript for most map functions
+
+
+
+
+
 * Ruby version
 
 * System dependencies
