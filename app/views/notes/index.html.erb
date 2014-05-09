@@ -119,7 +119,8 @@ function initialize(map, geoData) {
     });
 
     var newInfoWindow = new google.maps.InfoWindow({
-      content: note.text
+      content: "<h1> "+ note +"</h1>"
+      
     });
 
     addInfoWindowListener(newMarker, newInfoWindow);
