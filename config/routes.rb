@@ -5,14 +5,16 @@ Geonote::Application.routes.draw do
   root 'notes#new'
 
 
-  resources :notes
+  resources :notes do
+
+  get 'search', on: :collection
 
   # get "/notes/index", to: 'notes#index', as: 'notes'
   # get '/notes/new', to: 'notes#new', as: 'new_note'
   # post '/notes', to: 'notes#create'
   # get '/notes/:id', to: 'notes#show', as: 'note'
 
-  
+  end
 end
 
 # #                   Prefix Verb   URI Pattern                    Controller#Action

@@ -51,6 +51,24 @@ class NotesController < ApplicationController
     redirect_to root_path
   end
 
+  def search
+    puts "SEARCH!"
+    @search = SimpleSearch.new SimpleSearch.get_params(params)
+    #may or may not need this
+    @notes = Notes.none
+    if @search.valid?
+      @notes = @search.search_within Note.all, :text
+    # end
+    else 
+
+    flash[:error] = "Your search criteria is invalid. "
+            # flash[:errors]=@search.errors.full_messages
+     end
+    # render 'index'
+    #   end
+    # # end
+  end
+
   private
     def note_params
       params.require(:note).permit(:text, :latitude, :longitude)
@@ -59,5 +77,5 @@ class NotesController < ApplicationController
   #   @_current_user ||= session[:current_user_id] &&
   #     User.find_by(id: session[:current_user_id])
   # end
+ end
 
-end
