@@ -1,0 +1,23 @@
+<%= form_for(@search, url: search_notes_path, method: :get, authenticity_token: false) do |f| %>
+  <div class="input-group">
+    <%= f.text_field :q, class: 'form-control', placeholder: 'Name Search' %>
+    <div class="input-group-btn">
+      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>Search</button>
+    </div>
+  </div>
+<% end %>
+ 
+
+<% if @notes %>
+<%# A functional but unappealing notes view %>
+<div class="notes">
+  <% @notes.each do |result| %>
+  <div>
+    <%# Customize this based on your model class %>
+    <%= link_to result.text, result %>
+  </div>
+  <% end %>
+</div>  
+<%= flash[:errors] %>
+
+<% end %>
